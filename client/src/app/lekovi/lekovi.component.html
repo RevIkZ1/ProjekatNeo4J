@@ -1,0 +1,23 @@
+<form (submit)="addLek()" [formGroup]="form">
+  <label for="naziv" class="fs-20">Naziv:</label>
+  <textarea
+    type="text"
+    id="naziv"
+    name="naziv"
+    formControlName="naziv"
+    required
+  ></textarea>
+  <label for="kolicina" class="fs-20">Kolicina:</label>
+  <input
+    type="number"
+    id="kolicina"
+    name="kolicina"
+    formControlName="kolicina"
+    required
+  />
+  <button type="submit">Dodaj lek</button>
+</form>
+<div *ngFor="let lek of lek$ | async" class="anime-item">
+  <p class="title">Ime: {{ lek.naziv }}</p>
+  <p class="title">Prezime: {{ lek.kolicina }}</p>
+</div>

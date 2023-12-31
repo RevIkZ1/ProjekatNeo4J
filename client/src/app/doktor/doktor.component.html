@@ -1,0 +1,121 @@
+<p>doktor works!</p>
+<div *ngIf="doktor$ | async as doktor" class="anime-naslov">
+  <p class="title">Ime: {{ doktor.ime }}</p>
+  <p class="title">Prezime: {{ doktor.prezime }}</p>
+  <p class="title">Specijalizacija: {{ doktor.specijalizacija }}</p>
+  <p class="title">Broj telefona: {{ doktor.brojtelefona }}</p>
+  <p class="title">Ordinacija: {{ doktor.ordinacija }}</p>
+  <p class="title">Email: {{ doktor.email }}</p>
+  <h2>Izmeni doktora</h2>
+  <form (submit)="putDoktor()" [formGroup]="form">
+    <label for="ime" class="fs-20">Ime:</label>
+    <textarea
+      type="text"
+      id="ime"
+      name="ime"
+      formControlName="ime"
+      required
+    ></textarea>
+
+    <label for="prezime" class="fs-20">Prezime:</label>
+    <textarea
+      type="text"
+      id="prezime"
+      name="prezime"
+      formControlName="prezime"
+      required
+    ></textarea>
+
+    <label for="specijalizacija" class="fs-20">Specijalizacija:</label>
+    <textarea
+      type="text"
+      id="specijalizacija"
+      name="specijalizacija"
+      formControlName="specijalizacija"
+      required
+    ></textarea>
+
+    <label for="brojtelefona" class="fs-20">Broj telefona:</label>
+    <textarea
+      type="text"
+      id="brojtelefona"
+      name="brojtelefona"
+      formControlName="brojtelefona"
+      required
+    ></textarea>
+
+    <label for="ordinacija" class="fs-20">Ordinacija:</label>
+    <textarea
+      type="text"
+      id="ordinacija"
+      name="ordinacija"
+      formControlName="ordinacija"
+      required
+    ></textarea>
+
+    <label for="email" class="fs-20">Email:</label>
+    <textarea
+      type="email"
+      id="email"
+      name="email"
+      formControlName="email"
+      required
+    ></textarea>
+  </form>
+  <button (click)="putDoktor()">Ažuriraj Doktora</button>
+
+  <div *ngFor="let pregled of pregled$ | async" class="anime-item">
+    <p class="title">
+      Datum: {{ pregled.datumivreme | date : "dd.MM.yyyy HH:mm:ss" }}
+    </p>
+    <p class="title">Tip: {{ pregled.tip }}</p>
+    <button (click)="delete(pregled.id!)">Obrisi pregled</button>
+    <button (click)="prikaziPacijenta(pregled.id!)">Prikaži Pacijenta</button>
+    <div *ngIf="pregled.id === selectedPregledId" class="anime-naslov">
+      <!-- Prikaz podataka o pacijentu -->
+      <h2 class="facility-name">{{ selectedPacijent?.ime }}</h2>
+      <h2 class="facility-name">{{ selectedPacijent?.id }}</h2>
+      <form (submit)="postRecept(selectedPacijent?.id)" [formGroup]="form1">
+        <label for="datumivremeizdavanja" class="fs-20"
+          >datumivremeizdavanja:</label
+        >
+        <input
+          type="datetime-local"
+          id="datumivremeizdavanja"
+          name="datumivremeizdavanja"
+          formControlName="datumivremeizdavanja"
+          required
+        />
+
+        <label for="dnevnadoza" class="fs-20">dnevnadoza:</label>
+        <input
+          type="number"
+          id="dnevnadoza"
+          name="dnevnadoza"
+          formControlName="dnevnadoza"
+          required
+        />
+
+        <label for="nazivleka" class="fs-20">nazivleka:</label>
+        <textarea
+          type="text"
+          id="nazivleka"
+          name="specijalizacija"
+          formControlName="nazivleka"
+          required
+        ></textarea>
+
+        <label for="kakouzimati" class="fs-20">kakouzimati:</label>
+        <textarea
+          type="text"
+          id="kakouzimati"
+          name="kakouzimati"
+          formControlName="kakouzimati"
+          required
+        ></textarea>
+      </form>
+      <button (click)="postRecept(selectedPacijent?.id)">Postavi Recept</button>
+    </div>
+  </div>
+</div>
+<button (click)="prikazi()">Prikaži</button>

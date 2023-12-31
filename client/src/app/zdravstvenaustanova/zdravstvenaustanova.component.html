@@ -1,0 +1,45 @@
+<div class="holder backgroud-color">
+  <div class="header-content flex flex-c text-center text-white"></div>
+  <div class="">
+    <div
+      *ngFor="
+        let zdravstvenaustanova of zdravstveneUstanove$ | async;
+        let i = index
+      "
+      class="anime-item"
+    >
+      <div class="anime-item-info with-border">
+        <p class="anime-item-info-item title">
+          {{ zdravstvenaustanova.naziv }}
+        </p>
+        <p class="anime-item-info-item genre">
+          Ulica: {{ zdravstvenaustanova.adresa }}
+        </p>
+        <p class="anime-item-info-item episodes">
+          Kontakt kontaktTelefon:
+          <a [href]="'tel:' + zdravstvenaustanova.kontaktTelefon">
+            {{ zdravstvenaustanova.kontaktTelefon }}
+          </a>
+        </p>
+        <a
+          [routerLink]="['/zdravstvenaustanova', zdravstvenaustanova.id]"
+          class="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
+        >
+          Detalji
+        </a>
+        <a
+          [routerLink]="['/lekovi', zdravstvenaustanova.id]"
+          class="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
+        >
+          Lekovi
+        </a>
+        <a
+          [routerLink]="['/pomocnoosoblje', zdravstvenaustanova.id]"
+          class="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
+        >
+          Pomocno osoblje
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
