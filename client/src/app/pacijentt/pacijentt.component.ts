@@ -183,22 +183,16 @@ export class PacijenttComponent implements OnInit {
     this.zdravstvenaService.idUstanove$.subscribe((idUstanove) => {
       if (idUstanove !== null) {
         const info = { naziv, kolicina };
-        this.lekService
-          .putLek(info, idUstanove)
-          .pipe(
-            finalize(() => {
-              this.store.dispatch(
-                LekActions.putLek({
-                  lek: {
-                    naziv: info.naziv,
-                    kolicina: info.kolicina,
-                  },
-                  id: idUstanove,
-                })
-              );
-            })
-          )
-          .subscribe();
+
+        this.store.dispatch(
+          LekActions.putLek({
+            lek: {
+              naziv: info.naziv,
+              kolicina: info.kolicina,
+            },
+            id: idUstanove,
+          })
+        );
       } else {
         console.error('ID ustanove je null.');
       }
