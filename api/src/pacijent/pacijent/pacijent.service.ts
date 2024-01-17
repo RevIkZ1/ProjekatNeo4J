@@ -21,12 +21,14 @@ export class PacijentService {
         brosiguranja,
         alergije,
         zdravstvenaUstanovaId,
+        recepti,
+        pregledi,
       } = pacijentInput;
 
       const result: QueryResult = await this.neo4jService.write(
         `MATCH (z:ZdravstvenaUstanova)
          WHERE ID(z) = $zdravstvenaUstanovaId
-         CREATE (pacijent:Pacijent {ime: $ime, prezime: $prezime, datumrodjenja: $datumrodjenja, brojtelefona: $brojtelefona, brosiguranja: $brosiguranja, alergije: $alergije})
+         CREATE (pacijent:Pacijent {ime: $ime, prezime: $prezime, datumrodjenja: $datumrodjenja, brojtelefona: $brojtelefona, brosiguranja: $brosiguranja, alergije: $alergije,recepti:$recepti,pregledi:$pregledi})
          CREATE (pacijent)-[:PRIPADA]->(z)
          RETURN pacijent`,
         {
@@ -37,6 +39,8 @@ export class PacijentService {
           brosiguranja,
           alergije,
           zdravstvenaUstanovaId,
+          recepti,
+          pregledi,
         },
       );
 
@@ -58,6 +62,8 @@ export class PacijentService {
             alergije: pacijentNode.properties.alergije,
             zdravstvenaUstanovaId:
               pacijentNode.properties.zdravstvenaUstanovaId,
+            recepti: pacijentNode.properties.recepti,
+            pregledi: pacijentNode.properties.pregledi,
           };
           return pacijent;
         } else {

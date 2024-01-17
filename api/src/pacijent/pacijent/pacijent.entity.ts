@@ -1,3 +1,6 @@
+import { Lek } from 'src/lek/lek.entity';
+import { Pregled } from 'src/pregled/pregled.entity';
+import { Recept } from 'src/recept/recept.entity';
 import { ZdravstvenaUstanova } from 'src/zdravstvenaustanova/zdravstvenaustanova.entity';
 
 export class Pacijent {
@@ -9,6 +12,8 @@ export class Pacijent {
   brosiguranja: string;
   alergije: string;
   zdravstvenaUstanovaId: ZdravstvenaUstanova;
+  recepti?: Recept[] | null;
+  pregledi?: Pregled[] | null;
 }
 export class PacijentInput {
   ime?: string | null;
@@ -18,4 +23,6 @@ export class PacijentInput {
   brosiguranja?: string | null;
   alergije?: string | null;
   zdravstvenaUstanovaId?: ZdravstvenaUstanova | null;
+  recepti?: Recept[] | null;
+  pregledi?: Pregled[] | null;
 }

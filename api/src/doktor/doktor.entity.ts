@@ -1,3 +1,6 @@
+import { Lek } from 'src/lek/lek.entity';
+import { Pregled } from 'src/pregled/pregled.entity';
+import { Recept } from 'src/recept/recept.entity';
 import { ZdravstvenaUstanova } from 'src/zdravstvenaustanova/zdravstvenaustanova.entity';
 
 export class Doktor {
@@ -9,6 +12,8 @@ export class Doktor {
   ordinacija: string;
   email: string;
   zdravstvenaUstanovaId: ZdravstvenaUstanova;
+  recepti?: Recept[] | null;
+  pregledi?: Pregled[] | null;
 }
 export class DoktorInput {
   ime?: string | null;
@@ -18,4 +23,6 @@ export class DoktorInput {
   ordinacija?: string | null;
   email?: string | null;
   zdravstvenaUstanovaId?: ZdravstvenaUstanova | null;
+  recepti?: Recept[] | null;
+  pregledi?: Pregled[] | null;
 }

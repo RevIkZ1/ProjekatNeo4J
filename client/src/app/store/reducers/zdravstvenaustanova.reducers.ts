@@ -49,5 +49,22 @@ export const reducer = createReducer(
   on(zdravstvenaUstanovaActions.getZdravstvenaFailure, (state, action) => ({
     ...state,
     error: action.error,
+  })),
+  on(zdravstvenaUstanovaActions.postZdravstvena, (state) => ({
+    ...state,
+    isLoading: true,
+    error: null,
+  })),
+  on(zdravstvenaUstanovaActions.postZdravstvenaSuccess, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      ...adapter.upsertOne(action.zdravstvena, state),
+    };
+  }),
+  on(zdravstvenaUstanovaActions.postZdravstvenaFailure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    error: action.error,
   }))
 );

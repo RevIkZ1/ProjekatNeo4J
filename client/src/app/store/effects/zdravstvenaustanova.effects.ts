@@ -51,6 +51,30 @@ export class ZdravstvenaUstanovaEffects {
     )
   );
 
+  postDoktor$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ZdravstvenaUstanovaActions.postZdravstvena),
+      switchMap((action) => {
+        return this.zdravstvenaUstanovaService
+          .postZdravstvena(action.zdravstvena)
+          .pipe(
+            map(() =>
+              ZdravstvenaUstanovaActions.postZdravstvenaSuccess({
+                zdravstvena: action.zdravstvena,
+              })
+            ),
+            catchError((error) =>
+              of(
+                ZdravstvenaUstanovaActions.postZdravstvenaFailure({
+                  error: error.message,
+                })
+              )
+            )
+          );
+      })
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private zdravstvenaUstanovaService: ZdravstenaUstanovaService,

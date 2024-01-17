@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 import {
   ZdravstvenaUstanova,
@@ -16,6 +21,7 @@ import {
 import * as ZdravstvenaUstanovaAcions from '../store/actions/zdravstvenaustanova.actions';
 import { AdminState } from '../store/types/admin.interface';
 import { selectAdminFeature } from '../store/selectors/admin.selector';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-zdravstvenaustanova',
@@ -33,13 +39,20 @@ export class ZdravstvenaustanovaComponent implements OnInit {
 
   constructor(
     private zdravstvenaUstanovaService: ZdravstenaUstanovaService,
-    private store: Store<ZdravstvenaUstanovaState>
+    private store: Store<ZdravstvenaUstanovaState>,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
   ) {
     this.isLoading$ = this.store.select(isLoadingZdravstvenaUstanova);
     this.error$ = this.store.select(stateZdravstvenaUstanovaSelector);
     this.zdravstveneUstanove$ = this.store.select(ZdravstvenaUstanovaSelector);
   }
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      naziv: new FormControl('', Validators.required),
+      adresa: new FormControl('', Validators.required),
+      kontaktTelefon: new FormControl('', Validators.required),
+    });
     console.log('STA BRE');
     this.store.pipe(select(selectAdminFeature)).subscribe((userState) => {
       this.isLoggedIn = userState.isLoggedIn;
@@ -48,5 +61,29 @@ export class ZdravstvenaustanovaComponent implements OnInit {
     console.log('STA BRE');
 
     this.store.dispatch(ZdravstvenaUstanovaAcions.getZdravstvenaUstanova());
+  }
+
+  addZdravstvena() {
+    this.route.params.subscribe(async (params) => {
+      if (this.form.valid) {
+        const info = this.form.value;
+        try {
+          await this.store.dispatch(
+            ZdravstvenaUstanovaAcions.postZdravstvena({
+              zdravstvena: {
+                naziv: info.naziv,
+                adresa: info.adresa,
+                kontaktTelefon: info.kontaktTelefon,
+              },
+            })
+          );
+          this.form.reset();
+        } catch (error) {
+          console.error('Error while posting Doktor:', error);
+        }
+      } else {
+        alert('Molimo Vas popunite sva polja.');
+      }
+    });
   }
 }

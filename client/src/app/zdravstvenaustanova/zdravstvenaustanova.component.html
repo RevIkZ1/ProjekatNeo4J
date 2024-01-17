@@ -1,3 +1,33 @@
+<form (submit)="addZdravstvena()" [formGroup]="form">
+  <label for="naziv" class="fs-20">naziv:</label>
+  <textarea
+    type="text"
+    id="naziv"
+    name="naziv"
+    formControlName="naziv"
+    required
+  ></textarea>
+
+  <label for="adresa" class="fs-20">adresa:</label>
+  <textarea
+    type="text"
+    id="adresa"
+    name="adresa"
+    formControlName="adresa"
+    required
+  ></textarea>
+
+  <label for="kontaktTelefon" class="fs-20">kontaktTelefon:</label>
+  <textarea
+    type="text"
+    id="kontaktTelefon"
+    name="kontaktTelefon"
+    formControlName="kontaktTelefon"
+    required
+  ></textarea>
+
+  <button type="submit">Dodaj doktora</button>
+</form>
 <div class="holder backgroud-color">
   <div class="header-content flex flex-c text-center text-white"></div>
   <div class="">

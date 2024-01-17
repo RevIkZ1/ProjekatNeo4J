@@ -3,7 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { ZdravstvenaUstanovaModel } from '../store/types/zdravstvenaustanova.module';
+import {
+  ZdravstvenaUstanova,
+  ZdravstvenaUstanovaModel,
+} from '../store/types/zdravstvenaustanova.module';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +33,22 @@ export class ZdravstenaUstanovaService {
       { withCredentials: true }
     );
     return nesto;
+  }
+  postZdravstvena(
+    zdravstvenaustanova: ZdravstvenaUstanovaModel
+  ): Observable<ZdravstvenaUstanova[]> {
+    const lekData = {
+      naziv: zdravstvenaustanova.naziv,
+      adresa: zdravstvenaustanova.adresa,
+      kontaktTelefon: zdravstvenaustanova.kontaktTelefon,
+    };
+
+    return this.http.post<ZdravstvenaUstanova[]>(
+      `http://localhost:3000/zdravstvenaustanova/create`,
+      lekData,
+      {
+        withCredentials: true,
+      }
+    );
   }
 }

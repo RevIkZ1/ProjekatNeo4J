@@ -26,3 +26,21 @@ export const getZdravstvenaFailure = createAction(
   '[AnimeStudio page] Get AnimeStudio Failure',
   props<{ error: string }>()
 );
+export const postZdravstvena = createAction(
+  '[Zdravstvena page] Post Doktor',
+  props<{
+    zdravstvena: ZdravstvenaUstanovaModel;
+  }>()
+);
+
+export const postZdravstvenaSuccess = createAction(
+  '[Zdravstvena page] Post Doktor Success',
+  props<{
+    zdravstvena: ZdravstvenaUstanovaModel;
+  }>()
+);
+
+export const postZdravstvenaFailure = createAction(
+  '[Zdravstvena  page] Post Doktor Failure',
+  props<{ error: string }>()
+);
