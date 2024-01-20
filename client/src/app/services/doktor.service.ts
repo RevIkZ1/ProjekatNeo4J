@@ -11,17 +11,13 @@ export class DoktorService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getDoktorForUstanova(id: number): Observable<DoktorModel[]> {
-    console.log(id);
     const nesto = this.http.get<DoktorModel[]>(
       `http://localhost:3000/doktori/getdoktoribyustanova/${id}`,
       { withCredentials: true }
     );
-    console.log(nesto);
     return nesto;
   }
   postDoktor(doktor: DoktorModel, id: number): Observable<Doktor[]> {
-    console.log(id);
-
     const doktorData = {
       brojtelefona: doktor.brojtelefona,
       email: doktor.email,
@@ -41,8 +37,6 @@ export class DoktorService {
     );
   }
   putDoktor(doktor: DoktorModel, id: number): Observable<Doktor[]> {
-    console.log(id);
-
     const doktorData = {
       brojtelefona: doktor.brojtelefona,
       email: doktor.email,
@@ -51,10 +45,6 @@ export class DoktorService {
       prezime: doktor.prezime,
       specijalizacija: doktor.specijalizacija,
     };
-
-    console.log('11111111111');
-    console.log(doktorData);
-    console.log('11111111111');
 
     return this.http.put<Doktor[]>(
       `http://localhost:3000/doktori/updateDoktor/${id}`,
@@ -72,7 +62,6 @@ export class DoktorService {
     return nesto;
   }
   deleteDoktor(id: number) {
-    console.log(id);
     return this.http.delete<number>(
       `http://localhost:3000/doktori/deleteDoktor/${id}`,
       {

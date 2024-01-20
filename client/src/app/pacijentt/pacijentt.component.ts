@@ -102,9 +102,7 @@ export class PacijenttComponent implements OnInit {
 
     this.route.params.subscribe(async (params) => {
       let id = params['id'];
-      console.log('NEsto');
       this.store3.dispatch(ReceptActions.getReceptForUstanova({ id }));
-      console.log('NEsto');
       this.store2.dispatch(PacijentActions.getOnePacijent({ id }));
       id = params['ZdravstvenaID'];
 
@@ -148,7 +146,6 @@ export class PacijenttComponent implements OnInit {
         if (this.form.valid) {
           const info = this.form.value;
           const id = params['id']; // Assuming you get the ID from route params
-          console.log('Pacijent Info:', info);
 
           this.store.dispatch(
             PacijentActions.putPacijent({

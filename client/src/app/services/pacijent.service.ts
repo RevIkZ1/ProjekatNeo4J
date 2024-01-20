@@ -12,12 +12,10 @@ export class PacijentService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getPacijentForUstanova(id: number): Observable<PacijentModel[]> {
-    console.log(id);
     const nesto = this.http.get<PacijentModel[]>(
       `http://localhost:3000/pacijenti/getpacijentbyustanova/${id}`,
       { withCredentials: true }
     );
-    console.log(nesto);
     return nesto;
   }
   postPacijent(pacijent: PacijentModel, id: number): Observable<Pacijent[]> {
@@ -40,7 +38,6 @@ export class PacijentService {
     );
   }
   deletePacijent(id: number) {
-    console.log(id);
     return this.http.delete<number>(
       `http://localhost:3000/pacijenti/deletePacijent/${id}`,
       {
@@ -49,8 +46,6 @@ export class PacijentService {
     );
   }
   getPacijentByPregled(id: number): Observable<PacijentModel> {
-    console.log('(-----++++++-------)');
-
     const nesto = this.http.get<PacijentModel>(
       `http://localhost:3000/pacijenti/getPacijentByPregledId/${id}`,
       { withCredentials: true }
@@ -60,7 +55,6 @@ export class PacijentService {
   }
 
   getOnePacijent(id: number): Observable<PacijentModel> {
-    console.log('(----------------)');
     const nesto = this.http.get<PacijentModel>(
       `http://localhost:3000/pacijenti/getpacijent/${id}`,
       { withCredentials: true }
@@ -69,8 +63,6 @@ export class PacijentService {
     return nesto;
   }
   putDoktor(pacijent: PacijentModel, id: number): Observable<Pacijent[]> {
-    console.log(id);
-
     const pacijentData = {
       brojtelefona: pacijent.brojtelefona,
       datumrodjenja: pacijent.datumrodjenja,

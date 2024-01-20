@@ -95,7 +95,6 @@ export class DoktorComponent implements OnInit {
 
     this.route.params.subscribe(async (params) => {
       const id = params['id'];
-      console.log(id);
       this.store.dispatch(DoktorActions.getDoktor({ id }));
       this.store1.dispatch(PregledActions.getPregledForUstanova({ id }));
       if (this.pregled$) {
@@ -103,7 +102,6 @@ export class DoktorComponent implements OnInit {
           if (pregledi && pregledi.length > 0) {
             for (const pregled of pregledi) {
               if (pregled && pregled.id) {
-                console.log(pregled.id);
                 this.prikaziPacijente(pregled.id);
               }
             }
@@ -132,8 +130,6 @@ export class DoktorComponent implements OnInit {
       if (this.form1.valid) {
         const info = this.form1.value;
         const id = params['id']; // Assuming you get the ID from route params
-
-        console.log('Doktor Info:', info);
 
         try {
           await this.store.dispatch(
@@ -164,8 +160,6 @@ export class DoktorComponent implements OnInit {
       if (this.form.valid) {
         const info = this.form.value;
         const id = params['id']; // Assuming you get the ID from route params
-
-        console.log('Doktor Info:', info);
 
         try {
           await this.store.dispatch(
@@ -221,8 +215,5 @@ export class DoktorComponent implements OnInit {
   zatvoriPacijenta() {
     this.selectedPregledId = null;
     this.selectedPacijent = null;
-  }
-  prikazi() {
-    console.log('Nista');
   }
 }

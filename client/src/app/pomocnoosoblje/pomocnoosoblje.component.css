@@ -151,7 +151,6 @@ div.portfoliocard div.profile_picture {
   top: 65px;
   left: 40px;
   border-radius: 100%;
-  background-image: url("http://cache.spreadshirt.net/Public/Common/images/profile-pic-placeholder_130x130.png");
   background-size: 100% 100%;
   padding: 7px;
   border: 4px solid rgba(255, 255, 255, 1);
@@ -213,21 +212,7 @@ div.portfoliocard ul.contact_information li:before {
 div.portfoliocard ul.contact_information li:hover:before {
   opacity: 1;
 }
-div.portfoliocard ul.contact_information li.work:before {
-  background-image: url("http://schulzmarcel.de/x/icons/case_24.png");
-}
-div.portfoliocard ul.contact_information li.website:before {
-  background-image: url("http://schulzmarcel.de/x/icons/globe_24.png");
-}
-div.portfoliocard ul.contact_information li.mail:before {
-  background-image: url("http://schulzmarcel.de/x/icons/paper_plane_24.png");
-}
-div.portfoliocard ul.contact_information li.phone:before {
-  background-image: url("http://schulzmarcel.de/x/icons/phone_24.png");
-}
-div.portfoliocard ul.contact_information li.resume:before {
-  background-image: url("http://schulzmarcel.de/x/icons/inbox_24.png");
-}
+
 div.portfoliocard div.followers,
 div.portfoliocard div.following {
   font-family: "Open Sans", sans-serif;

@@ -61,7 +61,6 @@ export class PomocnoosobljeComponent implements OnInit {
 
     this.route.params.subscribe(async (params) => {
       const id = params['id'];
-      console.log(id);
       this.store.dispatch(
         PomocnoOsobljeActions.getPomocnoOsobljeForUstanova({ id })
       );
@@ -72,8 +71,6 @@ export class PomocnoosobljeComponent implements OnInit {
       if (this.form.valid) {
         const info = this.form.value;
         const id = params['id']; // Assuming you get the ID from route params
-
-        console.log('Doktor Info:', info);
 
         try {
           await this.store.dispatch(

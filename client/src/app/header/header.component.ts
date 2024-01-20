@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
   isLoggedIn!: boolean;
   user1: AdminModel;
   handleNavBar() {
-    console.log(this.logoImg);
     this.toggleMenu = !this.toggleMenu;
   }
   toggleDropdown() {
@@ -37,10 +36,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.pipe(select(selectAdminFeature)).subscribe((adminState) => {
-      console.log('+++');
-      console.log(adminState);
-      console.log('+++');
-
       this.isLoggedIn = adminState.isLoggedIn;
       this.authenticated = adminState.isLoggedIn;
       const userJson = localStorage.getItem('loggedUser');
@@ -59,9 +54,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   logout(): void {
-    console.log(this.user1);
     this.user = null;
-    console.log(this.user);
 
     this.store.dispatch(AdminActions.logOutUser());
   }

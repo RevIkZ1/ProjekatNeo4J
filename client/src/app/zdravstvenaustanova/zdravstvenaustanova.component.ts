@@ -53,12 +53,10 @@ export class ZdravstvenaustanovaComponent implements OnInit {
       adresa: new FormControl('', Validators.required),
       kontaktTelefon: new FormControl('', Validators.required),
     });
-    console.log('STA BRE');
     this.store.pipe(select(selectAdminFeature)).subscribe((userState) => {
       this.isLoggedIn = userState.isLoggedIn;
       this.authenticated = userState.isLoggedIn;
     });
-    console.log('STA BRE');
 
     this.store.dispatch(ZdravstvenaUstanovaAcions.getZdravstvenaUstanova());
   }

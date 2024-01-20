@@ -12,7 +12,6 @@ export class AppComponent implements OnInit {
   title = 'Client';
   constructor(private store: Store<AdminState>) {}
   ngOnInit(): void {
-    console.log('Jel ovde?');
     let loggedIn = false;
     if (localStorage.getItem('isLoggedIn')) {
       loggedIn = true;

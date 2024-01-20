@@ -73,7 +73,6 @@ export class LekoviComponent implements OnInit {
 
     this.route.params.subscribe(async (params) => {
       const id = params['id'];
-      console.log(id);
       this.store.dispatch(LekActions.getLekoviForUstanova({ id }));
     });
     if (this.lek$ != undefined)
@@ -85,8 +84,6 @@ export class LekoviComponent implements OnInit {
       if (this.form.valid) {
         const info = this.form.value;
         const id = params['id']; // Assuming you get the ID from route params
-
-        console.log('Lek Info:', info);
 
         try {
           await this.store.dispatch(

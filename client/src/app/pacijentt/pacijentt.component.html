@@ -96,7 +96,7 @@
     <p class="title">Email: {{ doktor.email }}</p>
     <ng-container *ngIf="authenticated">
       <form (submit)="postPregled(doktor.id)" [formGroup]="form1">
-        <label for="datumivreme" class="fs-20">datumivremeizdavanja:</label>
+        <label for="datumivreme" class="fs-20">Datum i vreme:</label>
         <input
           type="datetime-local"
           id="datumivreme"
@@ -105,10 +105,10 @@
           required
         />
 
-        <label for="tip" class="fs-20">tip:</label>
+        <label for="tip" class="fs-20">Tip:</label>
         <input type="text" id="tip" name="tip" formControlName="tip" required />
 
-        <label for="dijagnoza" class="fs-20">dijagnoza:</label>
+        <label for="dijagnoza" class="fs-20">Dijagnoza:</label>
         <input
           type="text"
           id="dijagnoza"
@@ -117,7 +117,7 @@
           required
         />
 
-        <label for="preporuke" class="fs-20">preporuke:</label>
+        <label for="preporuke" class="fs-20">Preporuke:</label>
         <input
           type="text"
           id="preporuke"

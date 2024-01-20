@@ -14,8 +14,6 @@ export class LekService {
     id: number,
     id1: number | undefined
   ): Observable<Lek[]> {
-    console.log(id);
-    console.log(lek);
     const lekData = {
       naziv: lek.naziv,
       kolicina: lek.kolicina,
@@ -57,21 +55,17 @@ export class LekService {
     );
   }
   getLekForUstanova(id: number): Observable<LekModel[]> {
-    console.log(id);
     const nesto = this.http.get<LekModel[]>(
       `http://localhost:3000/lekovi/getlekbyustanova/${id}`,
       { withCredentials: true }
     );
-    console.log(nesto);
     return nesto;
   }
   postDoktor(lek: LekModel, id: number): Observable<Lek[]> {
-    console.log(id);
-
     const lekData = {
       naziv: lek.naziv,
       kolicina: lek.kolicina,
-      zdravstvenaUstanovaId: +id, // Explicitly cast to number
+      zdravstvenaUstanovaId: +id,
     };
 
     return this.http.post<Lek[]>(

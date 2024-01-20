@@ -160,8 +160,6 @@ export class ZdravstvenaComponent implements OnInit {
         const info = this.form.value;
         const id = params['id']; // Assuming you get the ID from route params
 
-        console.log('Doktor Info:', info);
-
         try {
           await this.store1.dispatch(
             DoktorActions.postDoktor({
@@ -193,7 +191,6 @@ export class ZdravstvenaComponent implements OnInit {
         const info1 = this.form1.value;
 
         const id = params['id']; // Assuming you get the ID from route params
-        console.log('Pacijent Info:', info1);
 
         this.pacijentService
           .postPacijent(info1, id)
@@ -223,9 +220,7 @@ export class ZdravstvenaComponent implements OnInit {
   }
 
   prikazi() {
-    this.zdravstvenaustanova$?.subscribe((res) => {
-      console.log(res);
-    });
+    this.zdravstvenaustanova$?.subscribe((res) => {});
   }
   delete(id: number) {
     if (confirm('Da li zaista zelite da obrisete pacijenta')) {

@@ -15,20 +15,16 @@ export class PomocnoOsobljeService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getLekForUstanova(id: number): Observable<PomocnoOsobljeModel[]> {
-    console.log(id);
     const nesto = this.http.get<PomocnoOsobljeModel[]>(
       `http://localhost:3000/pomocnoosoblje/getpomocnoosobljebyustanova/${id}`,
       { withCredentials: true }
     );
-    console.log(nesto);
     return nesto;
   }
   postDoktor(
     pomocnoosoblje: PomocnoOsobljeModel,
     id: number
   ): Observable<PomocnoOsoblje[]> {
-    console.log(id);
-
     const lekData = {
       ime: pomocnoosoblje.ime,
       prezime: pomocnoosoblje.prezime,
