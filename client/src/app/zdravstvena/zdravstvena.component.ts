@@ -64,7 +64,34 @@ export class ZdravstvenaComponent implements OnInit {
     this.doktor$ = this.store.select(doktorSelectorUstanova);
     this.pacijent$ = this.store.select(pacijentSelectorUstanova);
   }
+  currentPageDoktor = 1; // Current page for doctors
+  totalDoktor = 0; // Total number of doctors
 
+  get totalPagesDoktor(): number {
+    return Math.ceil(this.totalDoktor / 4); // Assuming 4 doctors per page
+  }
+
+  get startIndexDoktor(): number {
+    return (this.currentPageDoktor - 1) * 4; // Assuming 4 doctors per page
+  }
+
+  get endIndexDoktor(): number {
+    return Math.min(this.startIndexDoktor + 4, this.totalDoktor); // Assuming 4 doctors per page
+  }
+  currentPagePacijent = 1; // Current page for pacijenti
+  totalPacijent = 0; // Total number of pacijenti
+
+  get totalPagesPacijent(): number {
+    return Math.ceil(this.totalPacijent / 4); // Assuming 4 pacijenti per page
+  }
+
+  get startIndexPacijent(): number {
+    return (this.currentPagePacijent - 1) * 4; // Assuming 4 pacijenti per page
+  }
+
+  get endIndexPacijent(): number {
+    return Math.min(this.startIndexPacijent + 4, this.totalPacijent); // Assuming 4 pacijenti per page
+  }
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       ime: new FormControl('', Validators.required),
@@ -96,6 +123,35 @@ export class ZdravstvenaComponent implements OnInit {
       this.store1.dispatch(DoktorActions.getDoktoriForUstanova({ id }));
       this.store2.dispatch(PacijentActions.getPacijentiForUstanova({ id }));
     });
+    if (this.doktor$ != undefined)
+      this.doktor$.subscribe((doktori) => (this.totalDoktor = doktori.length));
+    if (this.pacijent$ != undefined)
+      this.pacijent$.subscribe(
+        (pacijenti) => (this.totalPacijent = pacijenti.length)
+      );
+  }
+  prevPageDoktor() {
+    if (this.currentPageDoktor > 1) {
+      this.currentPageDoktor--;
+    }
+  }
+
+  nextPageDoktor() {
+    if (this.currentPageDoktor < this.totalPagesDoktor) {
+      this.currentPageDoktor++;
+    }
+  }
+
+  prevPagePacijent() {
+    if (this.currentPagePacijent > 1) {
+      this.currentPagePacijent--;
+    }
+  }
+
+  nextPagePacijent() {
+    if (this.currentPagePacijent < this.totalPagesPacijent) {
+      this.currentPagePacijent++;
+    }
   }
 
   addDoktor() {

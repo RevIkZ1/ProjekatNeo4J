@@ -111,7 +111,22 @@ export class DoktorComponent implements OnInit {
         });
       }
     });
+    if (this.doktor$ != undefined)
+      this.doktor$.subscribe((doktor) => {
+        // Update form controls with the values emitted by doktor$
+        if (doktor) {
+          this.form.patchValue({
+            ime: doktor.ime,
+            prezime: doktor.prezime,
+            specijalizacija: doktor.specijalizacija,
+            brojtelefona: doktor.brojtelefona,
+            ordinacija: doktor.ordinacija,
+            email: doktor.email,
+          });
+        }
+      });
   }
+
   postRecept(id1: number | undefined) {
     this.route.params.subscribe(async (params) => {
       if (this.form1.valid) {
@@ -173,7 +188,6 @@ export class DoktorComponent implements OnInit {
           // Handle error appropriately (e.g., show a user-friendly message)
         }
       } else {
-        alert('Molimo Vas popunite sva polja.');
       }
     });
   }

@@ -1,66 +1,78 @@
-<p>pomocnoosoblje works!</p>
 <form (submit)="addPomocnoOsoblje()" [formGroup]="form">
-  <label for="ime" class="fs-20">Ime:</label>
-  <textarea
-    type="text"
-    id="ime"
-    name="ime"
-    formControlName="ime"
-    required
-  ></textarea>
+  <h1>Dodaj pomocno osoblje</h1>
 
-  <label for="prezime" class="fs-20">Prezime:</label>
-  <textarea
-    type="text"
-    id="prezime"
-    name="prezime"
-    formControlName="prezime"
-    required
-  ></textarea>
+  <fieldset>
+    <label for="ime" class="fs-20">Ime:</label>
+    <input type="text" id="ime" name="ime" formControlName="ime" required />
 
-  <label for="uloga" class="fs-20">Uloga:</label>
-  <textarea
-    type="text"
-    id="uloga"
-    name="uloga"
-    formControlName="uloga"
-    required
-  ></textarea>
+    <label for="prezime" class="fs-20">Prezime:</label>
+    <input
+      type="text"
+      id="prezime"
+      name="prezime"
+      formControlName="prezime"
+      required
+    />
 
-  <label for="brojtelefona" class="fs-20">Broj telefona:</label>
-  <textarea
-    type="text"
-    id="brojtelefona"
-    name="brojtelefona"
-    formControlName="brojtelefona"
-    required
-  ></textarea>
+    <label for="uloga" class="fs-20">Uloga:</label>
+    <input
+      type="text"
+      id="uloga"
+      name="uloga"
+      formControlName="uloga"
+      required
+    />
 
-  <label for="radnomesto" class="fs-20">Radno mesto:</label>
-  <textarea
-    type="text"
-    id="radnomesto"
-    name="radnomesto"
-    formControlName="radnomesto"
-    required
-  ></textarea>
+    <label for="brojtelefona" class="fs-20">Broj telefona:</label>
+    <input
+      type="text"
+      id="brojtelefona"
+      name="brojtelefona"
+      formControlName="brojtelefona"
+      required
+    />
 
-  <label for="email" class="fs-20">Email:</label>
-  <textarea
-    type="email"
-    id="email"
-    name="email"
-    formControlName="email"
-    required
-  ></textarea>
+    <label for="radnomesto" class="fs-20">Radno mesto:</label>
+    <input
+      type="text"
+      id="radnomesto"
+      name="radnomesto"
+      formControlName="radnomesto"
+      required
+    />
 
+    <label for="email" class="fs-20">Email:</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      formControlName="email"
+      required
+    />
+  </fieldset>
   <button type="submit">Dodaj radnika</button>
 </form>
-<div *ngFor="let pomocnoosoblje of pomocnoosoblje$ | async" class="anime-item">
-  <p class="title">Ime: {{ pomocnoosoblje.ime }}</p>
-  <p class="title">Prezime: {{ pomocnoosoblje.prezime }}</p>
-  <p class="title">Uloga: {{ pomocnoosoblje.uloga }}</p>
-  <p class="title">Broj telefona: {{ pomocnoosoblje.brojtelefona }}</p>
-  <p class="title">Radno mesto: {{ pomocnoosoblje.radnomesto }}</p>
-  <p class="title">Email: {{ pomocnoosoblje.email }}</p>
+<div class="wrep">
+  <div *ngFor="let pomocnoosoblje of pomocnoosoblje$ | async">
+    <div class="portfoliocard">
+      <div class="coverphoto"></div>
+      <div class="profile_picture"></div>
+      <div class="left_col">
+        <div class="followers">
+          <div class="follow_count">{{ pomocnoosoblje.radnomesto }}</div>
+          Radno Mesto
+        </div>
+      </div>
+      <div class="right_col">
+        <h2 class="name">
+          {{ pomocnoosoblje.ime }} {{ pomocnoosoblje.prezime }}
+        </h2>
+        <ul class="contact_information">
+          <li class="work">{{ pomocnoosoblje.uloga }}</li>
+          <li class="mail">{{ pomocnoosoblje.email }}</li>
+          <li class="phone">{{ pomocnoosoblje.brojtelefona }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>

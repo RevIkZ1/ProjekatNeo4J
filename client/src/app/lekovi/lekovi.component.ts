@@ -45,6 +45,21 @@ export class LekoviComponent implements OnInit {
     this.error$ = this.store.select(lekSelectorUstanovaError);
     this.lek$ = this.store.select(lekSelectorUstanova);
   }
+  leksPerPage = 10; // Number of leks to display per page
+  currentPage = 1; // Current page
+  totalLeks = 0; // Total number of leks
+
+  get totalPages(): number {
+    return Math.ceil(this.totalLeks / this.leksPerPage);
+  }
+
+  get startIndex(): number {
+    return (this.currentPage - 1) * this.leksPerPage;
+  }
+
+  get endIndex(): number {
+    return Math.min(this.startIndex + this.leksPerPage, this.totalLeks);
+  }
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       naziv: new FormControl('', Validators.required),
@@ -56,6 +71,8 @@ export class LekoviComponent implements OnInit {
       console.log(id);
       this.store.dispatch(LekActions.getLekoviForUstanova({ id }));
     });
+    if (this.lek$ != undefined)
+      this.lek$.subscribe((leks) => (this.totalLeks = leks.length));
   }
 
   addLek() {
@@ -85,5 +102,16 @@ export class LekoviComponent implements OnInit {
         alert('Molimo Vas popunite sva polja.');
       }
     });
+  }
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
   }
 }

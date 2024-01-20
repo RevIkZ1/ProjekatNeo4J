@@ -35,7 +35,7 @@ ul {
 }
 a {
   text-decoration: none;
-  color: var(--black-color);
+  color: #add8e6;
 }
 button {
   outline: 0;
@@ -71,7 +71,7 @@ input {
 
 /*Boja teksta*/
 .text-black {
-  color: var(--black-color);
+  color: #add8e6;
 }
 .text-white {
   color: var(--white-color);

@@ -1,23 +1,58 @@
-<form (submit)="addLek()" [formGroup]="form">
-  <label for="naziv" class="fs-20">Naziv:</label>
-  <textarea
-    type="text"
-    id="naziv"
-    name="naziv"
-    formControlName="naziv"
-    required
-  ></textarea>
-  <label for="kolicina" class="fs-20">Kolicina:</label>
-  <input
-    type="number"
-    id="kolicina"
-    name="kolicina"
-    formControlName="kolicina"
-    required
-  />
-  <button type="submit">Dodaj lek</button>
-</form>
-<div *ngFor="let lek of lek$ | async" class="anime-item">
-  <p class="title">Ime: {{ lek.naziv }}</p>
-  <p class="title">Prezime: {{ lek.kolicina }}</p>
+<div class="flexmen">
+  <div>
+    <form (submit)="addLek()" [formGroup]="form">
+      <h1>Dodaj Lek</h1>
+      <fieldset>
+        <label for="naziv" class="fs-20">Naziv:</label>
+        <input
+          type="text"
+          id="naziv"
+          name="naziv"
+          formControlName="naziv"
+          required
+        />
+        <label for="kolicina" class="fs-20">Kolicina:</label>
+        <input
+          type="text"
+          id="kolicina"
+          name="kolicina"
+          formControlName="kolicina"
+          required
+        />
+      </fieldset>
+      <button type="submit">Dodaj lek</button>
+    </form>
+  </div>
+  <div>
+    <h1>Lista svih lekova izabrane bolnice</h1>
+    <table class="rwd-table">
+      <tr>
+        <th>Ime Leka</th>
+        <th>Količina</th>
+      </tr>
+      <tr *ngFor="let lek of lek$ | async; let i = index">
+        <ng-container *ngIf="i >= startIndex && i < endIndex">
+          <td data-th="Ime Leka">{{ lek.naziv }}</td>
+          <td data-th="Količina">{{ lek.kolicina }}</td>
+        </ng-container>
+      </tr>
+    </table>
+    <div class="pagination-container">
+      <button
+        class="pagination-button"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        &larr; Predhodna
+      </button>
+      <span class="pagination-info">Strana {{ currentPage }}</span>
+      <button
+        class="pagination-button"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Sledeća &rarr;
+      </button>
+    </div>
+  </div>
 </div>
