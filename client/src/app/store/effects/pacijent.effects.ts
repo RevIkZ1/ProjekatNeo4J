@@ -70,7 +70,7 @@ export class PacijentEffects {
     this.actions$.pipe(
       ofType(PacijentActions.getPacijent),
       mergeMap((action) => {
-        return this.pacijentService.getPacijentByRecept(action.id).pipe(
+        return this.pacijentService.getPacijentByPregled(action.id).pipe(
           map((pacijent) =>
             PacijentActions.getPacijentSuccess({
               pacijent,
@@ -87,7 +87,7 @@ export class PacijentEffects {
       })
     )
   );
-  getOnePacijent$ = createEffect(() =>
+  getOnePacijent1$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PacijentActions.getOnePacijent),
       mergeMap((action) => {

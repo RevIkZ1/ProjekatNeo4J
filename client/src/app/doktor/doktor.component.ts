@@ -201,7 +201,7 @@ export class DoktorComponent implements OnInit {
     this.store2.dispatch(PacijentActions.getPacijent({ id }));
 
     this.pacijentService
-      .getPacijentByRecept(id)
+      .getPacijentByPregled(id)
       .subscribe((pacijent: PacijentModel) => {
         this.pacijenti1$ = this.pacijenti1$.pipe(
           map((pacijenti: PacijentModel[]) => [...pacijenti, pacijent])
@@ -213,7 +213,7 @@ export class DoktorComponent implements OnInit {
     this.store2.dispatch(PacijentActions.getPacijent({ id: pregledId }));
 
     this.pacijentService
-      .getPacijentByRecept(pregledId)
+      .getPacijentByPregled(pregledId)
       .subscribe((pacijent: PacijentModel) => {
         this.selectedPacijent = pacijent;
       });

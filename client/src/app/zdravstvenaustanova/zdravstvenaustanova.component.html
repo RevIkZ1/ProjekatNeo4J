@@ -1,44 +1,47 @@
 <div class="holder backgroud-color">
   <div class="header-content flex flex-c text-center">
     <div class="flex">
-      <div style="width: 900px">
-        <form (submit)="addZdravstvena()" [formGroup]="form">
-          <h1>Dodaj Bolnicu</h1>
+      <ng-container *ngIf="authenticated">
+        <div style="width: 900px">
+          <form (submit)="addZdravstvena()" [formGroup]="form">
+            <h1>Dodaj Bolnicu</h1>
 
-          <fieldset>
-            <legend>
-              <span class="number">1</span> Osnovne informacije o bolnici
-            </legend>
+            <fieldset>
+              <legend>
+                <span class="number">1</span> Osnovne informacije o bolnici
+              </legend>
 
-            <label for="naziv">Naziv:</label>
-            <input
-              type="text"
-              id="naziv"
-              name="naziv"
-              formControlName="naziv"
-              required
-            />
-            <label for="adresa">Adresa:</label>
-            <input
-              type="text"
-              id="adresa"
-              name="adresa"
-              formControlName="adresa"
-              required
-            />
+              <label for="naziv">Naziv:</label>
+              <input
+                type="text"
+                id="naziv"
+                name="naziv"
+                formControlName="naziv"
+                required
+              />
+              <label for="adresa">Adresa:</label>
+              <input
+                type="text"
+                id="adresa"
+                name="adresa"
+                formControlName="adresa"
+                required
+              />
 
-            <label for="kontaktTelefon">Kontakt Telefon:</label>
-            <input
-              type="text"
-              id="kontaktTelefon"
-              name="kontaktTelefon"
-              formControlName="kontaktTelefon"
-              required
-            />
-          </fieldset>
-          <button type="submit">Dodaj bolnicu</button>
-        </form>
-      </div>
+              <label for="kontaktTelefon">Kontakt Telefon:</label>
+              <input
+                type="text"
+                id="kontaktTelefon"
+                name="kontaktTelefon"
+                formControlName="kontaktTelefon"
+                required
+              />
+            </fieldset>
+            <button type="submit">Dodaj bolnicu</button>
+          </form>
+        </div>
+      </ng-container>
+
       <div>
         <div class="wraper">
           <div

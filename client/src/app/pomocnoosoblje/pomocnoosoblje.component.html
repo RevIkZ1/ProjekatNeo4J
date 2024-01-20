@@ -1,57 +1,60 @@
-<form (submit)="addPomocnoOsoblje()" [formGroup]="form">
-  <h1>Dodaj pomocno osoblje</h1>
+<ng-container *ngIf="authenticated">
+  <form (submit)="addPomocnoOsoblje()" [formGroup]="form">
+    <h1>Dodaj pomocno osoblje</h1>
 
-  <fieldset>
-    <label for="ime" class="fs-20">Ime:</label>
-    <input type="text" id="ime" name="ime" formControlName="ime" required />
+    <fieldset>
+      <label for="ime" class="fs-20">Ime:</label>
+      <input type="text" id="ime" name="ime" formControlName="ime" required />
 
-    <label for="prezime" class="fs-20">Prezime:</label>
-    <input
-      type="text"
-      id="prezime"
-      name="prezime"
-      formControlName="prezime"
-      required
-    />
+      <label for="prezime" class="fs-20">Prezime:</label>
+      <input
+        type="text"
+        id="prezime"
+        name="prezime"
+        formControlName="prezime"
+        required
+      />
 
-    <label for="uloga" class="fs-20">Uloga:</label>
-    <input
-      type="text"
-      id="uloga"
-      name="uloga"
-      formControlName="uloga"
-      required
-    />
+      <label for="uloga" class="fs-20">Uloga:</label>
+      <input
+        type="text"
+        id="uloga"
+        name="uloga"
+        formControlName="uloga"
+        required
+      />
 
-    <label for="brojtelefona" class="fs-20">Broj telefona:</label>
-    <input
-      type="text"
-      id="brojtelefona"
-      name="brojtelefona"
-      formControlName="brojtelefona"
-      required
-    />
+      <label for="brojtelefona" class="fs-20">Broj telefona:</label>
+      <input
+        type="text"
+        id="brojtelefona"
+        name="brojtelefona"
+        formControlName="brojtelefona"
+        required
+      />
 
-    <label for="radnomesto" class="fs-20">Radno mesto:</label>
-    <input
-      type="text"
-      id="radnomesto"
-      name="radnomesto"
-      formControlName="radnomesto"
-      required
-    />
+      <label for="radnomesto" class="fs-20">Radno mesto:</label>
+      <input
+        type="text"
+        id="radnomesto"
+        name="radnomesto"
+        formControlName="radnomesto"
+        required
+      />
 
-    <label for="email" class="fs-20">Email:</label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      formControlName="email"
-      required
-    />
-  </fieldset>
-  <button type="submit">Dodaj radnika</button>
-</form>
+      <label for="email" class="fs-20">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        formControlName="email"
+        required
+      />
+    </fieldset>
+    <button type="submit">Dodaj radnika</button>
+  </form>
+</ng-container>
+
 <div class="wrep">
   <div *ngFor="let pomocnoosoblje of pomocnoosoblje$ | async">
     <div class="portfoliocard">

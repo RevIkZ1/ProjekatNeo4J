@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { PomocnoOsoblje } from '../store/types/pomocnoosoblje.module';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { PomocnoOsoboljeState } from '../store/types/pomocnoosoblje.interface';
 import { ActivatedRoute } from '@angular/router';
 import { PomocnoOsobljeService } from '../services/pomocnoosoblje.service';
@@ -18,6 +18,7 @@ import {
   pomocnoOsobljeSelectorUstanovaLoading,
 } from '../store/selectors/pomocnoosoblje.selector';
 import * as PomocnoOsobljeActions from '../store/actions/pomocnoosoblje.actions';
+import { selectAdminFeature } from '../store/selectors/admin.selector';
 
 @Component({
   selector: 'app-pomocnoosoblje',
@@ -45,6 +46,10 @@ export class PomocnoosobljeComponent implements OnInit {
     this.pomocnoosoblje$ = this.store.select(pomocnoOsobljeSelectorUstanova);
   }
   ngOnInit(): void {
+    this.store.pipe(select(selectAdminFeature)).subscribe((userState) => {
+      this.isLoggedIn = userState.isLoggedIn;
+      this.authenticated = userState.isLoggedIn;
+    });
     this.form = this.formBuilder.group({
       ime: new FormControl('', Validators.required),
       prezime: new FormControl('', Validators.required),

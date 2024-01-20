@@ -10,6 +10,7 @@ export const putLek = createAction(
   props<{
     lek: LekModel;
     id: number;
+    id1: number | undefined;
   }>()
 );
 

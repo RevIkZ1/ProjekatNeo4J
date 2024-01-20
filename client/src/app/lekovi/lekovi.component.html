@@ -1,28 +1,31 @@
 <div class="flexmen">
-  <div>
-    <form (submit)="addLek()" [formGroup]="form">
-      <h1>Dodaj Lek</h1>
-      <fieldset>
-        <label for="naziv" class="fs-20">Naziv:</label>
-        <input
-          type="text"
-          id="naziv"
-          name="naziv"
-          formControlName="naziv"
-          required
-        />
-        <label for="kolicina" class="fs-20">Kolicina:</label>
-        <input
-          type="text"
-          id="kolicina"
-          name="kolicina"
-          formControlName="kolicina"
-          required
-        />
-      </fieldset>
-      <button type="submit">Dodaj lek</button>
-    </form>
-  </div>
+  <ng-container *ngIf="authenticated">
+    <div>
+      <form (submit)="addLek()" [formGroup]="form">
+        <h1>Dodaj Lek</h1>
+        <fieldset>
+          <label for="naziv" class="fs-20">Naziv:</label>
+          <input
+            type="text"
+            id="naziv"
+            name="naziv"
+            formControlName="naziv"
+            required
+          />
+          <label for="kolicina" class="fs-20">Kolicina:</label>
+          <input
+            type="text"
+            id="kolicina"
+            name="kolicina"
+            formControlName="kolicina"
+            required
+          />
+        </fieldset>
+        <button type="submit">Dodaj lek</button>
+      </form>
+    </div>
+  </ng-container>
+
   <div>
     <h1>Lista svih lekova izabrane bolnice</h1>
     <table class="rwd-table">

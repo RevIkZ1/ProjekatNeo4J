@@ -46,5 +46,16 @@ export const reducer5 = createReducer(
     ...state,
     isLoading: false,
     error: action.error,
+  })),
+  on(ReceptActions.deleteRecept, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(ReceptActions.deleteReceptSuccess, (state, action) => {
+    return adapter.removeOne(action.id, { ...state, isLoading: false });
+  }),
+  on(ReceptActions.deleteReceptFailure, (state, action) => ({
+    ...state,
+    error: action.error,
   }))
 );

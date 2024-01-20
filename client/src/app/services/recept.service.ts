@@ -56,4 +56,12 @@ export class ReceptService {
     console.log(nesto, 'MOLIM');
     return nesto;
   }
+  deleteRecept(id: number) {
+    return this.http.delete<number>(
+      `http://localhost:3000/recept/deleteRecept/${id}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

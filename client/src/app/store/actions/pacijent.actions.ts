@@ -56,15 +56,15 @@ export const getPacijentFailure = createAction(
   props<{ error: string }>()
 );
 export const getOnePacijent = createAction(
-  '[Doktor page] Get Pacijent',
+  '[Pacijent page] Get Pacijent',
   props<{ id: number }>()
 );
 export const getOnePacijentSuccess = createAction(
-  '[Doktor page] Get Pacijent Success',
+  '[Pacijent page] Get Pacijent Success',
   props<{ pacijent: PacijentModel }>()
 );
 export const getOnePacijentFailure = createAction(
-  '[Doktor page] Get Pacijent Failure',
+  '[Pacijent page] Get Pacijent Failure',
   props<{ error: string }>()
 );
 export const putPacijent = createAction(

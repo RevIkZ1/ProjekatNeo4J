@@ -92,13 +92,15 @@
             class="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
             >Detalji</a
           >
-          <button
-            type="submit"
-            class="btn btn-primary"
-            (click)="delete1(doktor.id!)"
-          >
-            Delete
-          </button>
+          <ng-container *ngIf="authenticated">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              (click)="delete1(doktor.id!)"
+            >
+              Delete
+            </button>
+          </ng-container>
         </div>
 
         <!-- Pagination for the list of doctors -->
@@ -123,69 +125,70 @@
     </div>
   </div>
 </div>
+<ng-container *ngIf="authenticated">
+  <div class="section-container left-section">
+    <div class="add-anime-form">
+      <h2>Dodaj novog pacijenta</h2>
+      <form (submit)="addPacijent()" [formGroup]="form1">
+        <label for="ime1" class="fs-20">Ime:</label>
+        <input
+          type="text"
+          id="ime1"
+          name="ime1"
+          formControlName="ime1"
+          required
+        />
 
-<div class="section-container left-section">
-  <div class="add-anime-form">
-    <h2>Dodaj novog pacijenta</h2>
-    <form (submit)="addPacijent()" [formGroup]="form1">
-      <label for="ime1" class="fs-20">Ime:</label>
-      <input
-        type="text"
-        id="ime1"
-        name="ime1"
-        formControlName="ime1"
-        required
-      />
+        <label for="prezime1" class="fs-20">Prezime:</label>
+        <input
+          type="text"
+          id="prezime1"
+          name="prezime1"
+          formControlName="prezime1"
+          required
+        />
 
-      <label for="prezime1" class="fs-20">Prezime:</label>
-      <input
-        type="text"
-        id="prezime1"
-        name="prezime1"
-        formControlName="prezime1"
-        required
-      />
+        <label for="datumrodjenja1" class="fs-20">Datum rodjenja:</label>
+        <input
+          type="date"
+          id="datumrodjenja1"
+          name="datumrodjenja1"
+          formControlName="datumrodjenja1"
+          required
+        />
 
-      <label for="datumrodjenja1" class="fs-20">Datum rodjenja:</label>
-      <input
-        type="date"
-        id="datumrodjenja1"
-        name="datumrodjenja1"
-        formControlName="datumrodjenja1"
-        required
-      />
+        <label for="brojtelefona1" class="fs-20">Broj telefona:</label>
+        <input
+          type="text"
+          id="brojtelefona1"
+          name="brojtelefona1"
+          formControlName="brojtelefona1"
+          required
+        />
 
-      <label for="brojtelefona1" class="fs-20">Broj telefona:</label>
-      <input
-        type="text"
-        id="brojtelefona1"
-        name="brojtelefona1"
-        formControlName="brojtelefona1"
-        required
-      />
+        <label for="brosiguranja1" class="fs-20">Broj osiguranja:</label>
+        <input
+          type="text"
+          id="brosiguranja1"
+          name="brosiguranja1"
+          formControlName="brosiguranja1"
+          required
+        />
 
-      <label for="brosiguranja1" class="fs-20">Broj osiguranja:</label>
-      <input
-        type="text"
-        id="brosiguranja1"
-        name="brosiguranja1"
-        formControlName="brosiguranja1"
-        required
-      />
+        <label for="alergije1" class="fs-20">Alergije:</label>
+        <input
+          type="text"
+          id="alergije1"
+          name="alergije1"
+          formControlName="alergije1"
+          required
+        />
 
-      <label for="alergije1" class="fs-20">Alergije:</label>
-      <input
-        type="text"
-        id="alergije1"
-        name="alergije1"
-        formControlName="alergije1"
-        required
-      />
-
-      <button type="submit">Dodaj pacijenta</button>
-    </form>
+        <button type="submit">Dodaj pacijenta</button>
+      </form>
+    </div>
   </div>
-</div>
+</ng-container>
 
 <div class="section-container right-section">
   <div
@@ -213,17 +216,23 @@
             <p class="title">Broj osiguranja: {{ pacijent.brosiguranja }}</p>
             <p class="title">Alergije: {{ pacijent.alergije }}</p>
             <a
-              [routerLink]="['/pacijent', pacijent.id]"
+              [routerLink]="[
+                '/pacijent',
+                pacijent.id,
+                { ZdravstvenaID: zdravstvenaustanova.id }
+              ]"
               class="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
               >Detalji</a
             >
-            <button
-              type="submit"
-              class="btn btn-primary"
-              (click)="delete(pacijent.id!)"
-            >
-              Delete
-            </button>
+            <ng-container *ngIf="authenticated">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="delete(pacijent.id!)"
+              >
+                Delete
+              </button>
+            </ng-container>
           </div>
 
           <!-- Pagination for the list of pacijenti -->

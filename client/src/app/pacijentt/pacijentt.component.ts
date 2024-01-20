@@ -5,12 +5,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Observable, finalize } from 'rxjs';
+import { Observable, catchError, finalize, of, switchMap } from 'rxjs';
 import { PregledService } from '../services/pregled.service';
 import { ReceptService } from '../services/recept.service';
 import { PacijentService } from '../services/pacijent.service';
 import { PregledState } from '../store/types/pregled.interface';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { DoktorState } from '../store/types/doktor.interface';
 import { PacijentState } from '../store/types/pacijent.interface';
 import { ActivatedRoute } from '@angular/router';
@@ -40,6 +40,7 @@ import * as LekActions from '../store/actions/lek.actions';
 import { ZdravstenaUstanovaService } from '../services/zdravstvenaUstanova.service';
 import { ReceptState } from '../store/types/recept.inrerface';
 import { LekService } from '../services/lek.service';
+import { selectAdminFeature } from '../store/selectors/admin.selector';
 
 @Component({
   selector: 'app-pacijentt',
@@ -54,7 +55,6 @@ export class PacijenttComponent implements OnInit {
   error$?: Observable<String | null>;
   doktori$?: Observable<Doktor[]>;
   pacijent$?: Observable<Pacijent | null>;
-  pacijenti1$: Observable<PacijentModel[]>; // Dodajte $ oznaku
   isLoggedIn!: boolean;
   authenticated = true;
   pregled$?: Observable<Pregled[]> | undefined;
@@ -76,12 +76,15 @@ export class PacijenttComponent implements OnInit {
     this.isLoading$ = this.store.select(pacijentSelectorUstanovaLoading);
     this.error$ = this.store.select(pacijentSelectorUstanovaError);
     this.doktori$ = this.store.select(doktorSelectorUstanova);
-    this.pacijent$ = this.store.select(pacijentSelector);
-    this.pacijenti1$ = this.store.select(pacijentSelectorUstanova); // Postavite vrednost
+    this.pacijent$ = this.store2.select(pacijentSelector);
     this.recept$ = this.store.select(receptSelectorUstanova);
     this.pregled$ = this.store.select(pregledSelectorUstanova);
   }
   ngOnInit(): void {
+    this.store.pipe(select(selectAdminFeature)).subscribe((userState) => {
+      this.isLoggedIn = userState.isLoggedIn;
+      this.authenticated = userState.isLoggedIn;
+    });
     this.form = this.formBuilder.group({
       ime: new FormControl('', Validators.required),
       prezime: new FormControl('', Validators.required),
@@ -96,22 +99,16 @@ export class PacijenttComponent implements OnInit {
       dijagnoza: new FormControl('', Validators.required),
       preporuke: new FormControl('', Validators.required),
     });
-    this.zdravstvenaService.idUstanove$.subscribe((idUstanove) => {
-      if (idUstanove !== null) {
-        this.store.dispatch(
-          DoktorActions.getDoktoriForUstanova({ id: idUstanove })
-        );
-      } else {
-        console.error('ID ustanove je null.');
-      }
-    });
+
     this.route.params.subscribe(async (params) => {
-      const id = params['id'];
+      let id = params['id'];
       console.log('NEsto');
       this.store3.dispatch(ReceptActions.getReceptForUstanova({ id }));
       console.log('NEsto');
-
       this.store2.dispatch(PacijentActions.getOnePacijent({ id }));
+      id = params['ZdravstvenaID'];
+
+      this.store.dispatch(DoktorActions.getDoktoriForUstanova({ id: id }));
     });
   }
   postPregled(id1: number | undefined) {
@@ -119,7 +116,6 @@ export class PacijenttComponent implements OnInit {
       if (this.form1.valid) {
         const info = this.form1.value;
         const id = params['id']; // Assuming you get the ID from route params
-        console.log('Doktor Info:', info);
         if (id1 != undefined)
           this.receptService
             .postDoktor(info, id, id1)
@@ -147,55 +143,64 @@ export class PacijenttComponent implements OnInit {
     });
   }
   putPacijent() {
-    this.route.params.subscribe(async (params) => {
-      if (this.form.valid) {
-        const info = this.form.value;
-        const id = params['id']; // Assuming you get the ID from route params
-        console.log('Pacijent Info:', info);
+    try {
+      this.route.params.subscribe(async (params) => {
+        if (this.form.valid) {
+          const info = this.form.value;
+          const id = params['id']; // Assuming you get the ID from route params
+          console.log('Pacijent Info:', info);
 
-        this.pacijentService
-          .putDoktor(info, id)
-          .pipe(
-            finalize(() => {
-              this.store.dispatch(
-                PacijentActions.putPacijent({
-                  pacijent: {
-                    brojtelefona: info.brojtelefona,
-                    datumrodjenja: info.datumrodjenja,
-                    ime: info.ime,
-                    brosiguranja: info.brosiguranja,
-                    prezime: info.prezime,
-                    alergije: info.alergije,
-                  },
-                  id: id,
-                })
-              );
-              this.form.reset();
+          this.store.dispatch(
+            PacijentActions.putPacijent({
+              pacijent: {
+                brojtelefona: info.brojtelefona,
+                datumrodjenja: info.datumrodjenja,
+                ime: info.ime,
+                brosiguranja: info.brosiguranja,
+                prezime: info.prezime,
+                alergije: info.alergije,
+              },
+              id: id,
             })
-          )
-          .subscribe();
-      } else {
-        alert('Molimo Vas popunite sva polja.');
-      }
-    });
-  }
-  uzmiLek(naziv: string | undefined, kolicina: number | undefined) {
-    this.zdravstvenaService.idUstanove$.subscribe((idUstanove) => {
-      if (idUstanove !== null) {
-        const info = { naziv, kolicina };
+          );
 
-        this.store.dispatch(
-          LekActions.putLek({
-            lek: {
-              naziv: info.naziv,
-              kolicina: info.kolicina,
-            },
-            id: idUstanove,
-          })
-        );
-      } else {
-        console.error('ID ustanove je null.');
-      }
-    });
+          this.form.reset();
+        }
+      });
+    } catch (error) {
+      console.error('Greška prilikom ažuriranja pacijenta:', error);
+      alert('Došlo je do greške prilikom ažuriranja pacijenta.');
+    }
+  }
+  uzmiLek(
+    naziv: string | undefined,
+    kolicina: number | undefined,
+    id1: number | undefined
+  ) {
+    this.route.params
+      .pipe(
+        switchMap(async (params) => {
+          const info = { naziv, kolicina };
+          const id = params['ZdravstvenaID'];
+
+          this.store.dispatch(
+            LekActions.putLek({
+              lek: {
+                naziv: info.naziv,
+                kolicina: info.kolicina,
+              },
+              id: id,
+              id1: id1,
+            })
+          );
+
+          return id;
+        }),
+        catchError((error) => {
+          alert('Lek ne postoji u ovoj ustanovi');
+          return of(null);
+        })
+      )
+      .subscribe((id) => {});
   }
 }

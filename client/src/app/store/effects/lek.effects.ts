@@ -11,7 +11,7 @@ export class LekEffects {
     this.actions$.pipe(
       ofType(LekActions.putLek),
       switchMap((action) => {
-        return this.lekService.putLek(action.lek, action.id).pipe(
+        return this.lekService.putLek(action.lek, action.id, action.id1).pipe(
           map(() =>
             LekActions.putLekSuccess({
               lek: action.lek,

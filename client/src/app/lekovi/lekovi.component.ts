@@ -9,7 +9,7 @@ import { Observable, finalize } from 'rxjs';
 import { Lek } from '../store/types/lek.module';
 import { LekState } from '../store/types/lek.interface';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import {
   lekSelector,
   lekSelectorUstanova,
@@ -18,6 +18,7 @@ import {
 } from '../store/selectors/lek.selector';
 import * as LekActions from '../store/actions/lek.actions';
 import { LekService } from '../services/lek.service';
+import { selectAdminFeature } from '../store/selectors/admin.selector';
 
 @Component({
   selector: 'app-lekovi',
@@ -61,6 +62,10 @@ export class LekoviComponent implements OnInit {
     return Math.min(this.startIndex + this.leksPerPage, this.totalLeks);
   }
   ngOnInit(): void {
+    this.store.pipe(select(selectAdminFeature)).subscribe((userState) => {
+      this.isLoggedIn = userState.isLoggedIn;
+      this.authenticated = userState.isLoggedIn;
+    });
     this.form = this.formBuilder.group({
       naziv: new FormControl('', Validators.required),
       kolicina: new FormControl('', Validators.required),

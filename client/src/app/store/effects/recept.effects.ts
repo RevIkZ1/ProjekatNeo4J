@@ -48,6 +48,23 @@ export class ReceptEffects {
       })
     )
   );
+  removePacijent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ReceptActions.deleteRecept),
+      mergeMap((action) => {
+        return this.receptService.deleteRecept(action.id).pipe(
+          map((id) => ReceptActions.deleteReceptSuccess({ id: action.id })),
+          catchError((error) =>
+            of(
+              ReceptActions.deleteReceptFailure({
+                error: error.message,
+              })
+            )
+          )
+        );
+      })
+    )
+  );
   constructor(
     private actions$: Actions,
     private receptService: ReceptService,

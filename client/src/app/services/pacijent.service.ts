@@ -21,8 +21,6 @@ export class PacijentService {
     return nesto;
   }
   postPacijent(pacijent: PacijentModel, id: number): Observable<Pacijent[]> {
-    console.log('PERICAAA', pacijent); // Promenjeno mesto za konzolni ispis
-
     const pacijentData = {
       brojtelefona: pacijent.brojtelefona,
       brosiguranja: pacijent.brosiguranja,
@@ -32,8 +30,6 @@ export class PacijentService {
       datumrodjenja: pacijent.datumrodjenja,
       zdravstvenaUstanovaId: +id, // Explicitly cast to number
     };
-
-    console.log('PERICAAA', pacijentData); // Promenjeno mesto za konzolni ispis
 
     return this.http.post<Pacijent[]>(
       `http://localhost:3000/pacijenti/addPacijent`,
@@ -52,38 +48,22 @@ export class PacijentService {
       }
     );
   }
-  getPacijentByRecept(id: number): Observable<PacijentModel> {
-    console.log(id);
+  getPacijentByPregled(id: number): Observable<PacijentModel> {
+    console.log('(-----++++++-------)');
+
     const nesto = this.http.get<PacijentModel>(
       `http://localhost:3000/pacijenti/getPacijentByPregledId/${id}`,
       { withCredentials: true }
     );
 
-    nesto.subscribe(
-      (data) => {
-        console.log('Vrednost dobijena iz HTTP zahteva:', data);
-      },
-      (error) => {
-        console.error('Greška prilikom izvršavanja HTTP zahteva:', error);
-      }
-    );
-
     return nesto;
   }
+
   getOnePacijent(id: number): Observable<PacijentModel> {
-    console.log(id);
+    console.log('(----------------)');
     const nesto = this.http.get<PacijentModel>(
       `http://localhost:3000/pacijenti/getpacijent/${id}`,
       { withCredentials: true }
-    );
-
-    nesto.subscribe(
-      (data) => {
-        console.log('Vrednost dobijena iz HTTP zahteva:', data);
-      },
-      (error) => {
-        console.error('Greška prilikom izvršavanja HTTP zahteva:', error);
-      }
     );
 
     return nesto;
@@ -99,10 +79,6 @@ export class PacijentService {
       prezime: pacijent.prezime,
       alergije: pacijent.alergije,
     };
-
-    console.log('11111111111');
-    console.log(pacijentData);
-    console.log('11111111111');
 
     return this.http.put<Pacijent[]>(
       `http://localhost:3000/pacijenti/updateDoktor/${id}`,

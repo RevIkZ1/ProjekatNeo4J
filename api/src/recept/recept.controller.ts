@@ -18,16 +18,17 @@ export class ReceptController {
   async createRecept(@Body() receptInput: ReceptInput): Promise<Recept> {
     return this.receptService.createRecept(receptInput);
   }
-  @Delete('deleteRecept')
-  async deleteRecept(@Body('id') id: number): Promise<number> {
+  @Delete('deleteRecept/:id1')
+  async deleteRecept(@Param('id1') id1: number): Promise<number> {
     try {
-      await this.receptService.deleteReceptById(id);
+      console.log(id1);
+      await this.receptService.deleteReceptById(id1);
       return 200;
     } catch (error) {
       if (error instanceof NotFoundException) {
         return 404;
       }
-      console.error('Greška prilikom brisanja recept:', error);
+      console.error('Greška prilikom brisanja recept', error);
       return 500;
     }
   }

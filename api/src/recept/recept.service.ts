@@ -77,16 +77,33 @@ export class ReceptService {
   }
   async deleteReceptById(id1: number): Promise<void> {
     try {
-      var id = id1;
-      const result: QueryResult = await this.neo4jService.write(
-        `MATCH (recept:Recept) WHERE ID(recept) = $id DELETE recept`,
-        { id },
+      const id = id1;
+
+      const checkReceptResult: QueryResult = await this.neo4jService.read(
+        `MATCH (recept:Recept) WHERE ID(recept) = ${id} RETURN recept`,
+        {},
       );
-      if (!result || result.records.length === 0) {
+
+      if (!checkReceptResult || checkReceptResult.records.length === 0) {
+        throw new NotFoundException(`Recept with ID ${id} not found`);
+      }
+
+      const deleteRelationshipsResult: QueryResult =
+        await this.neo4jService.write(
+          `MATCH (recept:Recept)-[r]-() WHERE ID(recept) = ${id} DELETE r`,
+          {},
+        );
+
+      const deleteReceptResult: QueryResult = await this.neo4jService.write(
+        `MATCH (recept:Recept) WHERE ID(recept) = ${id} DELETE recept`,
+        {},
+      );
+
+      if (!deleteReceptResult || deleteReceptResult.records.length === 0) {
         throw new NotFoundException(`Recept with ID ${id} not found`);
       }
     } catch (error) {
-      console.error('Greška prilikom brisanja recept:', error);
+      console.error('Greška prilikom brisanja recepta:', error);
       throw error;
     }
   }

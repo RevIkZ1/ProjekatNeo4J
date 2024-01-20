@@ -33,3 +33,15 @@ export const ggetReceptForUstanovaFailure = createAction(
   '[Pacijent page] Get Recept Failure',
   props<{ error: string }>()
 );
+export const deleteRecept = createAction(
+  '[Pacijent Page] Delete Recept',
+  props<{ id: number }>()
+);
+export const deleteReceptSuccess = createAction(
+  '[Pacijent Page] Delete Recept Success',
+  props<{ id: number }>()
+);
+export const deleteReceptFailure = createAction(
+  '[Pacijent Page] Delete Recept Failure',
+  props<{ error: string }>()
+);
